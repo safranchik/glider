@@ -1,2 +1,2 @@
-# wasabi
-Welcome to WASABI, a machine learning framework for hybrid supervision.
+# glider
+Welcome to glider, a machine learning framework for hybrid supervision.
