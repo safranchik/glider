@@ -2,6 +2,7 @@ from torch.utils.data import Dataset
 import numpy as np
 import torch
 
+
 class DataType(Dataset):
     """
     Abstract class defining the general properties of a dataset
@@ -9,8 +10,7 @@ class DataType(Dataset):
 
     def __init__(self, features, metadata=None):
 
-        self.features = None
-        self.features = self.sanitize_data_attr(features)
+        self.features = features
 
         self.metadata = metadata if metadata is not None else {}
 
@@ -19,9 +19,8 @@ class DataType(Dataset):
     def __len__(self):
         return len(self.features)
 
-    def __getitem__(self, idx):
-        return {"x": self.features[idx],
-                "index": idx}
+    def __getitem__(self, ix):
+        return self.features[ix]
 
     @property
     def classes(self):
@@ -41,16 +40,11 @@ class DataType(Dataset):
 
         if self.features is not None:
             if attr is None:
-                return default_val * np.ones(len(self.features), dtype=dtype)
+                return default_val * np.ones(len(self.features))
             else:
                 assert len(attr) == len(self.features)
 
-        if isinstance(attr, np.ndarray):
-            return attr.astype(dtype)
-        elif torch.is_tensor(attr):
-            return np.array(attr, dtype=dtype)
-        else:
-            return np.array([np.array(a, dtype=dtype) for a in attr])
+        return np.array(attr, dtype=dtype)
 
     def add_data_attribute(self, name, attr):
         self.data_attributes[name] = self.sanitize_data_attr(attr)

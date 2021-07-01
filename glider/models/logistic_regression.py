@@ -1,16 +1,4 @@
-import torch
 import torch.nn as nn
-
-
-class LogisticRegression(nn.Module):
-
-    def __init__(self, in_features, num_classes):
-        super(LogisticRegression, self).__init__()
-        self.fc = nn.Linear(in_features, num_classes)
-
-    def forward(self, x):
-        return self.fc(x)
-
 
 class EBLogisticRegression(nn.Module):
 
